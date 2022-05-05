@@ -402,7 +402,7 @@
     </joint>
 
   <gazebo>
-      <plugin name="gazebo_ros_vacuum_gripper" filename="libgazebo_ros_vacuum_gripper.so">
+      <plugin name="gazebo_ros_vacuum_gripper" filename="libgripper.so">
         <robotNamespace>/ur5/vacuum_gripper</robotNamespace>
         <bodyName>vacuum_gripper</bodyName>
         <topicName>grasping</topicName>

@@ -14,7 +14,7 @@
     </inertial>
   </xacro:macro>
 
-  <xacro:macro name="ur5_robot" params="prefix joint_limited
+  <xacro:macro name="ur5_robot" params="prefix gripper_prefix joint_limited
     shoulder_pan_lower_limit:=${-pi}    shoulder_pan_upper_limit:=${pi}
     shoulder_lift_lower_limit:=${-pi}    shoulder_lift_upper_limit:=${pi}
     elbow_joint_lower_limit:=${-pi}    elbow_joint_upper_limit:=${pi}
@@ -363,7 +363,7 @@
       </collision>
     </link>
 
-    <link name="vacuum_gripper">
+    <link name="${prefix}vacuum_gripper">
       <gravity>0</gravity>
       <visual>
         <material name="transparent">
@@ -392,32 +392,32 @@
       </inertial>
     </link>
 
-    <joint name="gripper_joint" type="revolute">
+    <joint name="${prefix}gripper_joint" type="revolute">
       <axis xyz="1 0 0" />
-      <parent link="ee_link" />
-      <child link="vacuum_gripper" />
+      <parent link="${prefix}ee_link" />
+      <child link="${prefix}vacuum_gripper" />
       <origin rpy="0 1.5708 0" xyz="0.01 0.0125 0" />
       <limit effort="50" velocity="50" lower="0" upper="0" />
       <dynamics damping="0.0" friction="10"/>
     </joint>
 
   <gazebo>
-      <plugin name="gazebo_ros_vacuum_gripper" filename="libgripper.so">
-        <robotNamespace>/ur5/vacuum_gripper</robotNamespace>
-        <bodyName>vacuum_gripper</bodyName>
-        <topicName>grasping</topicName>
+      <plugin name="${prefix}gazebo_ros_vacuum_gripper" filename="libgripper.so">
+        <robotNamespace>/${gripper_prefix}ur5/vacuum_gripper</robotNamespace>
+        <bodyName>${prefix}vacuum_gripper</bodyName>
+        <topicName>${prefix}grasping</topicName>
       </plugin>
   </gazebo>
 
-  <joint name="camera_joint" type="fixed">
+  <joint name="${prefix}camera_joint" type="fixed">
     <axis xyz="0 1 0" />
     <origin xyz="-0.02 0.0 0.055" rpy="${pi} 0 0"/>
-    <parent link="ee_link"/>
-    <child link="camera_link"/>
+    <parent link="${prefix}ee_link"/>
+    <child link="${prefix}camera_link"/>
   </joint>
 
   <!-- Camera -->
-  <link name="camera_link">
+  <link name="${prefix}camera_link">
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -441,15 +441,15 @@
 
   <!-- generate an optical frame http://www.ros.org/reps/rep-0103.html#suffix-frames
       so that ros and opencv can operate on the camera frame correctly -->
-  <joint name="camera_optical_joint" type="fixed">
+  <joint name="${prefix}camera_optical_joint" type="fixed">
     <!-- these values have to be these values otherwise the gazebo camera image
         won't be aligned properly with the frame it is supposedly originating from -->
     <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
-    <parent link="camera_link"/>
-    <child link="camera_link_optical"/>
+    <parent link="${prefix}camera_link"/>
+    <child link="${prefix}camera_link_optical"/>
   </joint>
 
-  <link name="camera_link_optical">
+  <link name="${prefix}camera_link_optical">
   </link>
 
     <xacro:ur_arm_transmission prefix="${prefix}" hw_interface="hardware_interface/PositionJointInterface"/>

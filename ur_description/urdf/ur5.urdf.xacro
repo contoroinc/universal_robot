@@ -453,16 +453,16 @@
   <link name="${prefix}camera_link_optical">
   </link>
 
-  <!-- External Camera -->
+  <!-- Right External Camera -->
 
-    <joint name="${prefix}external_camera_joint" type="fixed">
+    <joint name="${prefix}right_external_camera_joint" type="fixed">
     <axis xyz="0 1 0" />
     <origin xyz="0.5 -0.8 0.9" rpy="${pi} ${pi*3/4} ${-pi/4}"/>
     <parent link="${prefix}base_link"/>
-    <child link="${prefix}external_camera_link"/>
+    <child link="${prefix}right_external_camera_link"/>
   </joint>
 
-  <link name="${prefix}external_camera_link">
+  <link name="${prefix}right_external_camera_link">
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -486,15 +486,59 @@
 
   <!-- generate an optical frame http://www.ros.org/reps/rep-0103.html#suffix-frames
       so that ros and opencv can operate on the camera frame correctly -->
-  <joint name="${prefix}external_camera_optical_joint" type="fixed">
+  <joint name="${prefix}right_external_camera_optical_joint" type="fixed">
     <!-- these values have to be these values otherwise the gazebo camera image
         won't be aligned properly with the frame it is supposedly originating from -->
     <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
-    <parent link="${prefix}external_camera_link"/>
-    <child link="${prefix}external_camera_link_optical"/>
+    <parent link="${prefix}right_external_camera_link"/>
+    <child link="${prefix}right_external_camera_link_optical"/>
   </joint>
 
-  <link name="${prefix}external_camera_link_optical">
+  <link name="${prefix}right_external_camera_link_optical">
+  </link>
+
+  <!-- Left External Camera -->
+
+    <joint name="${prefix}left_external_camera_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin xyz="-0.5 -0.8 0.9" rpy="${pi} ${pi*3/4} ${-pi*3/4}"/>
+    <parent link="${prefix}base_link"/>
+    <child link="${prefix}left_external_camera_link"/>
+  </joint>
+
+  <link name="${prefix}left_external_camera_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+	<box size="${camera_link} ${camera_link} ${camera_link}"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+	<box size="${camera_link} ${camera_link} ${camera_link}"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
+  <!-- generate an optical frame http://www.ros.org/reps/rep-0103.html#suffix-frames
+      so that ros and opencv can operate on the camera frame correctly -->
+  <joint name="${prefix}left_external_camera_optical_joint" type="fixed">
+    <!-- these values have to be these values otherwise the gazebo camera image
+        won't be aligned properly with the frame it is supposedly originating from -->
+    <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+    <parent link="${prefix}left_external_camera_link"/>
+    <child link="${prefix}left_external_camera_link_optical"/>
+  </joint>
+
+  <link name="${prefix}left_external_camera_link_optical">
   </link>
 
     <xacro:ur_arm_transmission prefix="${prefix}" hw_interface="hardware_interface/PositionJointInterface"/>

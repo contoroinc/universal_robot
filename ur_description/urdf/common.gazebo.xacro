@@ -202,4 +202,27 @@
     <material>Gazebo/Black</material>
   </gazebo>
 
+  <gazebo reference="laser_link">
+    <projector name="projector_wg6802418">
+        <pose>0 0 0 0 0 0</pose>
+        <texture>dot.png</texture>
+        <fov>0.0125</fov>
+        <near_clip>.001</near_clip>
+        <far_clip>3</far_clip>
+     </projector>
+</gazebo>
+<gazebo>
+     <plugin name="projector" filename="libgazebo_ros_projector.so">
+         <projector>projector_wg6802418</projector>
+         <alwaysOn>true</alwaysOn>
+         <updateRate>10.0</updateRate>
+         <!-- Apparently the 2 lines below does not affect anything -->
+         <textureName></textureName>
+         <filterTextureName></filterTextureName>
+         <!-- end -->
+         <textureTopicName>/projector/image</textureTopicName>
+         <projectorTopicName>/projector/projector</projectorTopicName>
+     </plugin>
+</gazebo>
+
 </robot>

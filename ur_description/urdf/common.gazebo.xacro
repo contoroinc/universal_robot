@@ -206,7 +206,7 @@
     <projector name="projector_wg6802418">
         <pose>0 0 0 0 0 0</pose>
         <texture>dot.png</texture>
-        <fov>0.0125</fov>
+        <fov>0.025</fov>
         <near_clip>.001</near_clip>
         <far_clip>3</far_clip>
      </projector>

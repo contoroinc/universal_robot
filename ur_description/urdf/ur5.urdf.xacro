@@ -405,7 +405,7 @@
       <plugin name="${prefix}gazebo_ros_vacuum_gripper" filename="libvacuum_gripper_plugin.so">
         <robotNamespace>/${gripper_prefix}vacuum_gripper</robotNamespace>
         <bodyName>${prefix}vacuum_gripper</bodyName>
-        <topicName>${prefix}grasping</topicName>
+        <topicName>${prefix}is_grasping</topicName>
       </plugin>
   </gazebo>
 
